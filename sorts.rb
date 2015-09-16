@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Array
 	def merge_sort
 		return self if self.length <= 1
@@ -20,7 +22,7 @@ class Array
 		sorted
 	end
 
-############
+  ##########
 
 	def swap!(id1, id2)
 		self[id1], self[id2] = self[id2], self[id1]
@@ -50,6 +52,37 @@ class Array
 end
 
 
+#In progress... O(n) ???
+def frog_hop(arr, x, d)
+	right = [x]
+	left = [0]
+	mid = []
+	arr.each_with_index do |el, id|
+		if right.last - el <= d && el - left.last <= d
+			return id
+		elsif el < right.last && right.last - el <= d
+			right << el
+		elsif el > left.last && el - left.last <= d
+			left << el
+		else
+			mid << el
+		end
+		if !mid.empty?
+			mid.each do |el2|
+				if el2 < right.last && right.last - el2 <= d
+					right << el2
+				elsif el2 > left.last && el2 - left.last <= d
+					left << el2
+				end
+			end
+		end
+	end
+	return false
+end
 
-a = [4, 5, 1, 9, -2, 0, 4, -5, 7]
-p a.quick_sort!
+
+p frog_hop([3,1,4,5,2,6], 7, 3) #=> 2
+p frog_hop([1,1,5,2,3], 7, 3) #=> 3
+p frog_hop([5,2,4,8,1], 9, 3) #=> 3
+p frog_hop([6,1,4,3,1,2], 7, 2) #=> 3
+
