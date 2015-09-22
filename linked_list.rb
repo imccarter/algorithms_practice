@@ -27,12 +27,55 @@ class Link
 		self.next = link
 	end
 
+	def remove
+		self.next.prev = self.prev unless self.next.nil?
+		self.prev.next = self.next unless self.prev.nil?
+		self.prev, self.next = nil, nil
+	end
+
+	def inspect
+		"Value: #{val}, Previous: #{self.prev}, Next: #{self.next}"
+	end
 end
 
 class SentinelLink < Link
 	def initialize(side)
 		raise "wrong side" unless [:first, :last].include?(side)
 		@side = side
+	end
+
+	def val
+		raise "Sentinel Link; no value"
+	end
+
+	def val=
+		raise "Sentinel Link; no value"
+	end
+
+	def prev=(link)
+		if @side == :last
+			return super(link)
+		elsif link.nil?
+		else
+			raise "Can't insert left of first link"
+		end
+	end
+
+	def next=(link)
+		if @side == :first
+			return super(link)
+		elsif link.nil?
+		else
+			raise "Can't insert right of last link"
+		end
+	end
+
+	def remove
+		raise "Can't remove Sentinel Link"
+	end
+
+	def inspect
+		"Sentinel Link; #{side}"
 	end
 end
 
