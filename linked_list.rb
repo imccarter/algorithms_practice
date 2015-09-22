@@ -34,7 +34,7 @@ class Link
 	end
 
 	def inspect
-		"Value: #{val}, Previous: #{self.prev}, Next: #{self.next}"
+		"Value: #{@val}, Previous: #{self.prev}, Next: #{self.next}"
 	end
 end
 
@@ -80,6 +80,7 @@ class SentinelLink < Link
 end
 
 class LinkedList
+	attr_reader :first, :last
 
 	def initialize
 		@first = SentinelLink.new(:first)
@@ -87,28 +88,48 @@ class LinkedList
 		@last = @first.next
 	end
 
-	def []
-
-	end
-
 	def empty?
-
+		first.next == last
 	end
 
 	def pop
-
+		pop_link.val
 	end
 
-	def push
+	def pop_link
+		raise "List is empty, cannot pop!" if empty?
+		link = last.prev
+		link.remove
+		link
+	end
 
+	def push(val)
+		push_link(Link.new(val))
+	end
+
+	def push_link(link)
+		last.insert_left(link)
+		link
 	end
 
 	def shift
-
+		shift_link.val
 	end
 
-	def unshift
+	def shift_link
+		raise "List is empty, cannot unshift!" if empty?
+		link = first.next
+		link.remove
+		link
+	end
 
+	def unshift(val)
+		unshift_link(Link.new(val))
+	end
+
+	def unshift_link(link)
+		first.insert_right(link)
+		link
 	end
 
 end
