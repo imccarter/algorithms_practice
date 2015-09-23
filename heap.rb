@@ -1,8 +1,9 @@
 # for representing a heap as an array
 class MinHeap
 
-	def initialize(arr = [])
+	def initialize(arr = [], len = arr.length)
 		@store = []
+		@len = len
 		arr.each { |el| insert(el) }
 	end
 
@@ -19,8 +20,8 @@ class MinHeap
 		min
 	end
 
-	def children(id)
-		[((id * 2) + 1), ((id * 2) + 2)]
+	def children(id, len = @len)
+		[((id * 2) + 1), ((id * 2) + 2)].select { |child_id| child_id < len }
 	end
 
 	def parent(id)
@@ -66,5 +67,17 @@ class MinHeap
 			end
 		end
 	end
-	
 end
+
+# class Array
+# 	def heap_sort!
+# 		return self if length < 2
+# 		heapify!
+# 		unheapify!
+# 		self.reverse!
+# 	end
+
+# 	def heapify!
+# 		each_index do |current|
+# 			while need_to_heapify_up?(current)
+# 				swap!(current, parent(current))
