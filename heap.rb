@@ -11,6 +11,14 @@ class MinHeap
 		@store[0]
 	end
 
+	def count
+		@store.length
+	end
+
+	def empty?
+		count == 0
+	end
+
 	def pop_min
 		min = self.min
 		return nil if @store.empty?
@@ -69,15 +77,20 @@ class MinHeap
 	end
 end
 
-# class Array
-# 	def heap_sort!
-# 		return self if length < 2
-# 		heapify!
-# 		unheapify!
-# 		self.reverse!
-# 	end
 
-# 	def heapify!
-# 		each_index do |current|
-# 			while need_to_heapify_up?(current)
-# 				swap!(current, parent(current))
+#Still need to test...
+class Array
+	def heap_sort!
+		2.upto(count).each do |heap_size|
+			MinHeap.heapify_up!()
+		end
+
+		count.downto(2).each do |heap_size|
+			self[heap_size - 1], self[0] = self[0], self[heap_size - 1]
+			MinHeap.heapify_down!
+		end
+
+		self.reverse!
+
+	end
+end

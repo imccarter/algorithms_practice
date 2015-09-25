@@ -1,4 +1,6 @@
 class Vertex
+	attr_reader :val, :out_edges, :in_edges
+
 	def initialize(val,)
 		@val = val
 		@out_edges = []
@@ -25,10 +27,15 @@ end
 
 
 class Edge
+	attr_reader :to, :from, :weight
+
 	def initialize(to = nil, from = nil, weight = nil)
 		@to = to
 		@from = from
 		@weight = weight
+
+		@to.in_edges << self
+		@from.out_edges << self
 	end
 end
 
