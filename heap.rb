@@ -1,5 +1,6 @@
 # for representing a heap as an array
 class MinHeap
+	attr_accessor :store, :len
 
 	def initialize(arr = [], len = arr.length)
 		@store = []
@@ -41,8 +42,6 @@ class MinHeap
 		heapify_up!
 		val
 	end
-
-	private
 	
 	def swap(id1, id2)
 		@store[id1], @store[id2] = @store[id2], @store[id1]
@@ -65,9 +64,9 @@ class MinHeap
 		current = 0
 		while current < @store.length - 1
 			children_ids = children(current)
-			children.select! { |n| n.between?(0, @store.length - 1) }
-			break if children.empty?
-			min_child = children.min_by { |i| @store[i] }
+			children_ids.select! { |n| n.between?(0, @store.length - 1) }
+			break if children_ids.empty?
+			min_child = children_ids.min_by { |i| @store[i] }
 			if @store[current] > @store[min_child]
 				swap(current, min_child)
 			else
@@ -78,19 +77,25 @@ class MinHeap
 end
 
 
-#Still need to test...
+#Not working yet... 
 class Array
 	def heap_sort!
 		2.upto(count).each do |heap_size|
-			MinHeap.heapify_up!()
+			MinHeap.new(self).heapify_up!
 		end
 
 		count.downto(2).each do |heap_size|
 			self[heap_size - 1], self[0] = self[0], self[heap_size - 1]
-			MinHeap.heapify_down!
+			MinHeap.new(self).heapify_down!
 		end
 
 		self.reverse!
 
 	end
 end
+
+
+a = [5, 1, 2, 3, 9, 2, 8]
+heap_a = MinHeap.new(a)
+p heap_a
+# p a.heap_sort!
