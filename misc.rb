@@ -155,3 +155,10 @@ matrix3 = [[1, 2],
 
 p print_spiral(matrix3)
 
+#basic Hash-map resize function:
+class Array
+	def resize!
+		@num_buckets = @num_buckets * 2
+		new_store = 
+
+
